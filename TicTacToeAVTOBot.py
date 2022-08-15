@@ -2,6 +2,7 @@ import tkinter
 import random
 import time
 #отправка на ГИТ попытка 2
+#отправка на ГИТ попытка 3
 
 coord = [50, 150, 250]
 
