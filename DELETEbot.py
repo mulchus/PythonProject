@@ -27,37 +27,38 @@ def delete(message):
     #print(message)
     _, user, time_1, time_2 = message.text.split(maxsplit=3)
     print(datetime.fromtimestamp(message.date+10800).strftime("%H:%M"))
+    try:
+        time_start = datetime.combine(datetime.now().date(), datetime.strptime(time_1, "%H-%M").time())
+    except ValueError:
+        bot.send_message(message.chat.id, f'РќРµРІРµСЂРЅРѕ РІРІРµРґРµРЅР° РєРѕРјР°РЅРґР° {message.text}. РџСЂР°РІРёР»СЊРЅС‹Р№ С„РѕСЂРјР°С‚ /delete РњРњ-Р§Р§ РњРњ-Р§Р§')
+    else:
+        time_start_sec = int((time_start-datetime(1970,1,1)).total_seconds()-10800)
+        #print(time_start)
+        print(time_start_sec)
+        time_end = datetime.combine(datetime.now().date(), datetime.strptime(time_2, "%H-%M").time())
+        time_end_sec = int((time_end-datetime(1970,1,1)).total_seconds()-10800)
+        #print(time_end)
+        print(time_end_sec)
 
-    time_start = datetime.combine(datetime.now().date(), datetime.strptime(time_1, "%H-%M").time())
-    time_start_sec = int((time_start-datetime(1970,1,1)).total_seconds()-10800)
-    print(time_start)
-    print(time_start_sec)
-    time_end = datetime.combine(datetime.now().date(), datetime.strptime(time_2, "%H-%M").time())
-    time_end_sec = int((time_end-datetime(1970,1,1)).total_seconds()-10800)
-    print(time_end)
-    print(time_end_sec)
+        #for i in range(time_end_sec, time_start_sec, -1):
 
-    print(message.from_user.username, message.chat.id, message.id)
-    #for i in range(time_end_sec, time_start_sec, -1):
-
-    #ВОТ ЗДЕСЬ НАДО НАУЧИТЬСЯ ПРОхОДИТЬ ПО ДРУГИМ ПЕРЕМЕННЫМ СООбЩЕНИЯ
-    for entity in message.entities:  # Пройдёмся по всем entities в поисках ссылок
-
-        # url - обычная ссылка, text_link - ссылка, скрытая под текстом
-
-        if message.from_user.username == user and message.date in range(time_start_sec, time_end_sec):
-            print(message.date)
-            # Мы можем не проверять chat.id, он проверяется ещё в хэндлере
-            bot.delete_message(message.chat.id, message.message_id)
-        else:
-            return
+        #Р’РћРў Р—Р”Р•РЎР¬ РќРђР”Рћ РќРђРЈР§РРўР¬РЎРЇ РџР РћС…РћР”РРўР¬ РџРћ Р”Р РЈР“РРњ РџР•Р Р•РњР•РќРќР«Рњ РЎРћРћР±Р©Р•РќРРЇ
+        for y in message.id:  # РџСЂРѕР№РґС‘РјСЃСЏ РїРѕ РІСЃРµРј entities РІ РїРѕРёСЃРєР°С… СЃСЃС‹Р»РѕРє
+            # url - РѕР±С‹С‡РЅР°СЏ СЃСЃС‹Р»РєР°, text_link - СЃСЃС‹Р»РєР°, СЃРєСЂС‹С‚Р°СЏ РїРѕРґ С‚РµРєСЃС‚РѕРј
+            if message.from_user.username == user and message.date in range(time_start_sec, time_end_sec):
+                print(message.date)
+                # РњС‹ РјРѕР¶РµРј РЅРµ РїСЂРѕРІРµСЂСЏС‚СЊ chat.id, РѕРЅ РїСЂРѕРІРµСЂСЏРµС‚СЃСЏ РµС‰С‘ РІ С…СЌРЅРґР»РµСЂРµ
+                bot.delete_message(message.chat.id, message.message_id)
+                print(f'РЈРґР°Р»РµРЅРѕ СЃРѕРѕР±С‰РµРЅРёРµ РѕС‚ {message.from_user.username}, {message.chat.id}, {message.id}')
+            else:
+                return
 
 # @bot.message_handler(func=lambda message: message.entities is not None and message.chat.id == message.chat.id)
 # def delete_links(message):
-#     for entity in message.entities:  # Пройдёмся по всем entities в поисках ссылок
-#         # url - обычная ссылка, text_link - ссылка, скрытая под текстом
+#     for entity in message.entities:  # РџСЂРѕР№РґС‘РјСЃСЏ РїРѕ РІСЃРµРј entities РІ РїРѕРёСЃРєР°С… СЃСЃС‹Р»РѕРє
+#         # url - РѕР±С‹С‡РЅР°СЏ СЃСЃС‹Р»РєР°, text_link - СЃСЃС‹Р»РєР°, СЃРєСЂС‹С‚Р°СЏ РїРѕРґ С‚РµРєСЃС‚РѕРј
 #         if entity.type in ["url", "text_link"]:
-#             # Мы можем не проверять chat.id, он проверяется ещё в хэндлере
+#             # РњС‹ РјРѕР¶РµРј РЅРµ РїСЂРѕРІРµСЂСЏС‚СЊ chat.id, РѕРЅ РїСЂРѕРІРµСЂСЏРµС‚СЃСЏ РµС‰С‘ РІ С…СЌРЅРґР»РµСЂРµ
 #             bot.delete_message(message.chat.id, message.message_id)
 #         else:
 #             return
@@ -69,7 +70,7 @@ def delete(message):
 
     # print(msg)
     # time.sleep(2)
-    # bot.edit_message_text(chat_id = message.chat.id, message_id = msg.message_id, text = f'ой, ты написал "{message.text}"')
+    # bot.edit_message_text(chat_id = message.chat.id, message_id = msg.message_id, text = f'РѕР№, С‚С‹ РЅР°РїРёСЃР°Р» "{message.text}"')
     # tb.edit_message_text(new_text, chat_id, message_id)
     # photo = open('/tmp/photo.png', 'rb')
     # tb.send_photo(chat_id, photo)
