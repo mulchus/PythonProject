@@ -13,19 +13,19 @@ CONTENT_TYPES = ["text", "audio", "document", "photo", "sticker", "video", "vide
 @bot.message_handler(commands=["takenumber"])
 def get_phone(message):
     keyboard = types.ReplyKeyboardMarkup(row_width=1,
-                                         resize_keyboard=True)  # подключаем клавиатуру через дополнение types
-    button_phone = types.KeyboardButton(text="send_phone", request_contact=True)  # указываем название кнопки
-    keyboard.add(button_phone)  # добавляем кнопку
-    bot.send_message(message.chat.id, "Вы можете оправить номер нажав на кнопку send_phone", reply_markup=keyboard)
+                                         resize_keyboard=True)  # РїРѕРґРєР»СЋС‡Р°РµРј РєР»Р°РІРёР°С‚СѓСЂСѓ С‡РµСЂРµР· РґРѕРїРѕР»РЅРµРЅРёРµ types
+    button_phone = types.KeyboardButton(text="send_phone", request_contact=True)  # СѓРєР°Р·С‹РІР°РµРј РЅР°Р·РІР°РЅРёРµ РєРЅРѕРїРєРё
+    keyboard.add(button_phone)  # РґРѕР±Р°РІР»СЏРµРј РєРЅРѕРїРєСѓ
+    bot.send_message(message.chat.id, "Р’С‹ РјРѕР¶РµС‚Рµ РѕРїСЂР°РІРёС‚СЊ РЅРѕРјРµСЂ РЅР°Р¶Р°РІ РЅР° РєРЅРѕРїРєСѓ send_phone", reply_markup=keyboard)
 
 @bot.message_handler(content_types=CONTENT_TYPES)
 def confirming(message):
     if message.content_type == "contact":
         keyboard = types.ReplyKeyboardRemove()
-        bot.send_message(message.chat.id, "Мы получили ваш номер.", reply_markup=keyboard)
+        bot.send_message(message.chat.id, "РњС‹ РїРѕР»СѓС‡РёР»Рё РІР°С€ РЅРѕРјРµСЂ.", reply_markup=keyboard)
     else:
         keyboard = types.ReplyKeyboardRemove()
-        bot.send_message(message.chat.id, "Номер не был отправлен.", reply_markup=keyboard)
+        bot.send_message(message.chat.id, "РќРѕРјРµСЂ РЅРµ Р±С‹Р» РѕС‚РїСЂР°РІР»РµРЅ.", reply_markup=keyboard)
 
-print("Начали")
-bot.polling()  # запуск бота
+print("РќР°С‡Р°Р»Рё")
+bot.polling()  # Р·Р°РїСѓСЃРє Р±РѕС‚Р°

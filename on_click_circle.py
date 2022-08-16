@@ -1,8 +1,8 @@
 import tkinter
 import random
-# создаем окно
+# СЃРѕР·РґР°РµРј РѕРєРЅРѕ
 window = tkinter.Tk()
-# создаем холст и размещаем его в окне
+# СЃРѕР·РґР°РµРј С…РѕР»СЃС‚ Рё СЂР°Р·РјРµС‰Р°РµРј РµРіРѕ РІ РѕРєРЅРµ
 canvas = tkinter.Canvas(window, width=600, height=600)
 canvas.pack()
 colors=['red', 'green', 'gold', 'blue', 'white', 'black', 'yellow']
@@ -13,7 +13,7 @@ last_color = ''
 def my_click(event):
     global last_color
     color = colors[random.randint(0, 5)]
-    #далее проверка на повторяемость цвета и его подмена если true
+    #РґР°Р»РµРµ РїСЂРѕРІРµСЂРєР° РЅР° РїРѕРІС‚РѕСЂСЏРµРјРѕСЃС‚СЊ С†РІРµС‚Р° Рё РµРіРѕ РїРѕРґРјРµРЅР° РµСЃР»Рё true
     if color == last_color:
         if colors.index(color) == len(colors)-1:
             color = colors[0]
@@ -28,7 +28,7 @@ def my_click(event):
     last_color = color
     canvas.update()
     
-    #print(f'Клик на холсте в точке x={event.x}, y={event.y}')
+    #print(f'РљР»РёРє РЅР° С…РѕР»СЃС‚Рµ РІ С‚РѕС‡РєРµ x={event.x}, y={event.y}')
 
 canvas.bind('<Button-1>', my_click)
 window.mainloop()

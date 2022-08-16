@@ -2,24 +2,28 @@ import telebot
 from datetime import datetime
 from datetime import time
 
-token = '5430864257:AAHsIGljFlHg_BpYoW7o9AKqi4Q-hw6tNRc'
-bot = telebot.TeleBot(token)
 
 user = ''
 time_start = ''
 time_end = ''
 
 
-# @bot.message_handler(content_types=['text'])
-# def echo(message):
-#     #print(message)
-#     pass
+@bot.message_handler(content_types=['text'])
+def echo(message):
+    print(message)
+    pass
+
+
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    GROUP_ID = message.chat.id
-    bot.send_message(message.chat.id, f'GROUP_ID = {message.chat.id}')
-    return GROUP_ID
+    group_id = message.chat.id
+    bot.send_message(message.chat.id, f'group_id = {message.chat.id}')
+    return group_id
+
+@bot.message_handler(commands=['show']) # вывод сообщений, возможных к обработке
+def show(message):
+    #print(message)
 
 
 @bot.message_handler(commands=['delete']) #, func=lambda message: message.entities is not None and message.chat.id == message.chat.id )
