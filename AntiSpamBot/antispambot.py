@@ -1,29 +1,42 @@
+import config
 import telebot
+import csv
 from datetime import datetime
 from datetime import time
 
+bot = telebot.TeleBot(config.token)
 
-user = ''
 time_start = ''
 time_end = ''
 
-
-@bot.message_handler(content_types=['text'])
-def echo(message):
-    print(message)
-    pass
-
-
-
 @bot.message_handler(commands=['start'])
 def start(message):
+    with open('wordfilter.csv', newline='') as f:  # создание списка плохих слов из файла csv
+        config.mat = csv.reader(f)
+        f.close()
+    print(config.mat[0:10])
     group_id = message.chat.id
     bot.send_message(message.chat.id, f'group_id = {message.chat.id}')
     return group_id
 
+# проверка поступившего сообщения на плохие слова
+@bot.message_handler(content_types=['text'])
+def bad_text(message):
+    for word in message.text:
+        if word in config.mat:
+            bot.send_message(message.chat.id, f'Зачем ругаешься? Ты сказал {word}!')
+    #print(message)
+    pass
+
+
+
+
+
+
 @bot.message_handler(commands=['show']) # вывод сообщений, возможных к обработке
 def show(message):
     #print(message)
+    pass
 
 
 @bot.message_handler(commands=['delete']) #, func=lambda message: message.entities is not None and message.chat.id == message.chat.id )
